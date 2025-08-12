@@ -36,11 +36,11 @@ void setPotion(int count, int* p_HPPotion, int* p_MPPotion) {
 }
 
 // HP와 MP를 회복하는 함수
-void recoverHP(int* hp, int* hpPotion) {
-    if (*hpPotion > 0) {
-        *hp += 20;
-        (*hpPotion)--;
-        cout << "* HP가 20 증가했습니다.\n* 현재 HP: " << *hp << ", 남은 HP 포션: " << *hpPotion << endl;
+void recoverHP(int& hp, int& hpPotion) {
+    if (hpPotion > 0) {
+        hp += 20;
+        (hpPotion)--;
+        cout << "* HP가 20 증가했습니다.\n* 현재 HP: " << hp << ", 남은 HP 포션: " << hpPotion << endl;
     }
     else {
         cout << "* HP 포션이 없습니다!" << endl;
@@ -48,33 +48,33 @@ void recoverHP(int* hp, int* hpPotion) {
 }
 
 // MP를 회복하는 함수
-void recoverMP(int* mp, int* mpPotion) {
-    if (*mpPotion > 0) {
-        *mp += 20;
-        (*mpPotion)--;
-        cout << "* MP가 20 증가했습니다.\n* 현재 MP: " << *mp << ", 남은 MP 포션: " << *mpPotion << endl;
+void recoverMP(int& mp, int& mpPotion) {
+    if (mpPotion > 0) {
+        mp += 20;
+        (mpPotion)--;
+        cout << "* MP가 20 증가했습니다.\n* 현재 MP: " << mp << ", 남은 MP 포션: " << mpPotion << endl;
     }
     else {
         cout << "* MP 포션이 없습니다!" << endl;
     }
 }
 // HP를 강화하는 함수
-void enhanceHP(int* hp) {
-    *hp *= 2;
-    cout << "* HP가 2배 증가했습니다.\n* 현재 HP: " << *hp << endl;
+void enhanceHP(int& hp) {
+    hp *= 2;
+    cout << "* HP가 2배 증가했습니다.\n* 현재 HP: " << hp << endl;
 }
 
 // MP를 강화하는 함수
-void enhanceMP(int* mp) {
-    *mp *= 2;
-    cout << "* MP가 2배 증가했습니다.\n* 현재 MP: " << *mp << endl;
+void enhanceMP(int& mp) {
+    mp *= 2;
+    cout << "* MP가 2배 증가했습니다.\n* 현재 MP: " << mp << endl;
 }
 
 // 공격 스킬을 사용하는 함수
-void useAttackSkill(int* mp) {
-    if (*mp >= 50) {
-        *mp -= 50;
-        cout << "* 공격 스킬을 사용했습니다.\n* 현재 MP: " << *mp << endl;
+void useAttackSkill(int& mp) {
+    if (mp >= 50) {
+        mp -= 50;
+        cout << "* 공격 스킬을 사용했습니다.\n* 현재 MP: " << mp << endl;
     }
     else {
         cout << "* MP가 부족합니다!" << endl;
@@ -82,10 +82,10 @@ void useAttackSkill(int* mp) {
 }
 
 // 필살기를 사용하는 함수
-void useUltimateSkill(int* mp) {
-    if (*mp > 0) {
-        *mp = *mp / 2; 
-        cout << "* 필살기를 사용했습니다.\n* 스킬 사용으로 MP가 50% 소모되었습니다.\n* 현재 MP: " << *mp << endl;
+void useUltimateSkill(int& mp) {
+    if (mp > 0) {
+        mp = mp / 2; 
+        cout << "* 필살기를 사용했습니다.\n* 스킬 사용으로 MP가 50% 소모되었습니다.\n* 현재 MP: " << mp << endl;
     }
     else {
         cout << "* MP가 부족합니다!" << endl;
@@ -109,7 +109,7 @@ int main() {
     } while (status[2] <= 0 || status[3] <= 0);
 
     
-	setPotion(5, &hpPotion, &mpPotion); // 기본 포션 지급
+	setPotion(5, &hpPotion, &mpPotion); // 기본 포션 지급 
 	cout << "* 포션이 지급되었습니다. (HP, MP 포션 각 5개)" << endl;
 	cout << "=============================================" << endl;
    
@@ -129,12 +129,12 @@ int main() {
 		// 사용자 입력
         cin >> choice;
         switch (choice) {
-        case 1: recoverHP(&status[0], &hpPotion); break;
-        case 2: recoverMP(&status[1], &mpPotion); break;
-        case 3: enhanceHP(&status[0]); break;
-        case 4: enhanceMP(&status[1]); break;
-        case 5: useAttackSkill(&status[1]); break;
-        case 6: useUltimateSkill(&status[1]); break;
+		case 1: recoverHP(status[0], hpPotion); break;  // HP 회복
+		case 2: recoverMP(status[1], mpPotion); break;  // MP 회복
+		case 3: enhanceHP(status[0]); break;            // HP 강화
+		case 4: enhanceMP(status[1]); break;            // MP 강화
+		case 5: useAttackSkill(status[1]); break;       // 공격 스킬 사용
+		case 6: useUltimateSkill(status[1]); break; 	// 필살기 사용
         case 7: cout << "* 프로그램을 종료합니다." << endl; break;
         default: cout << "* 다시 선택해주세요." << endl; break;
         }
